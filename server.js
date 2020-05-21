@@ -9,6 +9,9 @@ const cors = require('cors');
 app.use(cors());
 
 
+const mongo = require('./api/utils/mongo-client');
+mongo.connect();
+
 
 app.use(favicon(__dirname + '/build/favicon.ico'));
 // the __dirname is the current directory from where the script is running

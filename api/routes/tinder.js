@@ -9,6 +9,7 @@ const a = axios.create({
 });
 
 const storage = require('../utils/file-storage');
+const mongo = require('../utils/mongo-client');
 
 const parsePhotos = (photos) => {
     let images = [];
@@ -29,12 +30,12 @@ let cachedProfiles = new Map();
 const routes = {
     like: async (req, res) => {
         // console.log('like' + req.params.id + '|' + req.params.s_number)
+        const profile = cachedProfiles.get(req.params.id);
 
-        //TODO: save profile to db
-
+        //save profile to db
+        await mongo.insert('tinder1','likes', profile);
 
         //save images to file
-        const profile = cachedProfiles.get(req.params.id);
         if (profile) {
             for (let i = 0; i < profile.photos.length; i++) {
                 const photo = profile.photos[i];
@@ -49,11 +50,12 @@ const routes = {
         res.json(result.data);
     },
     dislike: async (req, res) => {
+        const profile = cachedProfiles.get(req.params.id);
 
-        //TODO: save profile to db
+        //save profile to db
+        await mongo.insert('tinder1','dislikes', profile);
 
         //save images to file
-        const profile = cachedProfiles.get(req.params.id);
         if (profile) {
             for (let i = 0; i < profile.photos.length; i++) {
                 const photo = profile.photos[i];
@@ -81,7 +83,8 @@ const routes = {
                 name: p.user.name,
                 bio: p.user.bio,
                 birthDate: p.user.birth_date,
-                photos: parsePhotos(p.user.photos)
+                photos: parsePhotos(p.user.photos),
+                rawProfile: p
             };
             profiles.push(profile);
             //cache profiles for usage later
