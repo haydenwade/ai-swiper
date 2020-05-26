@@ -38,6 +38,10 @@ export default class App extends React.Component {
     this.setState({ currentProfile: index })
   }
   render() {
+    const getAge = (dob)=>{
+      const temp = dob.split('-');
+      return 2020 - parseInt(temp[0]);
+    }
     return (
       <Container>
         <Row>
@@ -80,7 +84,7 @@ export default class App extends React.Component {
               <Col>
                 {!this.state.loading && this.state.profiles.length > 0 &&
                   <React.Fragment>
-                    {this.state.profiles[this.state.currentProfile].name}
+                    {this.state.profiles[this.state.currentProfile].name} {getAge(this.state.profiles[this.state.currentProfile].birthDate)}
                     <br />
                     {this.state.profiles[this.state.currentProfile].bio}
                   </React.Fragment>

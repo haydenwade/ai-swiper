@@ -45,7 +45,8 @@ const routes = {
 
         //tell tinder we like this person
         //https://api.gotinder.com/like/5157474dac70435241000154?locale=en
-        const result = await a.post(`/like/${req.params.id}?locale=en`)
+        const result = await a.post(`/like/${req.params.id}?locale=en`,{s_number: req.params.s_number});
+        console.log(result);
         res.status(200);
         res.json(result.data);
     },
@@ -67,6 +68,7 @@ const routes = {
         //https://api.gotinder.com/pass/51bd37239d72d7892900000f?locale=en&s_number=19498852
         // console.log('dislike' + req.params.id + '|' + req.params.s_number)
         const result = await a.get(`/pass/${req.params.id}?locale=en&s_number=${req.params.s_number}`)
+        console.log(result);
         res.status(200);
         res.json(result.data);
     },
