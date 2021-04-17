@@ -39,7 +39,8 @@ const routes = {
         if (profile) {
             for (let i = 0; i < profile.photos.length; i++) {
                 const photo = profile.photos[i];
-                storage.saveImageToFile(`./pics/likes/${photo.name}`, photo.url);
+                const name = photo.name.split('?')[0]
+                storage.saveImageToFile(`./pics/likes/${name}`, photo.url);
             }
         }
 
@@ -60,7 +61,8 @@ const routes = {
         if (profile) {
             for (let i = 0; i < profile.photos.length; i++) {
                 const photo = profile.photos[i];
-                storage.saveImageToFile(`./pics/dislikes/${photo.name}`, photo.url);
+                const name = photo.name.split('?')[0]
+                storage.saveImageToFile(`./pics/dislikes/${name}`, photo.url);
             }
         }
 
